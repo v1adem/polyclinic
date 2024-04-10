@@ -1,9 +1,13 @@
-package com.v1adem.polyclinic.model;
+package com.v1adem.polyclinic.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@NoArgsConstructor
+@Getter
 @Entity
 public class Doctor {
     @Id
@@ -26,4 +30,12 @@ public class Doctor {
     private List<MedicalRecord> medicalRecords;
     @OneToMany(mappedBy = "doctor")
     private List<Prescription> prescriptions;
+
+    public Doctor(String name, String lastName, String email, String phoneNumber, String specialization) {
+        this.firstName = name;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.specialization = specialization;
+    }
 }
