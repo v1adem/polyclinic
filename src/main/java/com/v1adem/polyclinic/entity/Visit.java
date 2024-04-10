@@ -1,4 +1,4 @@
-package com.v1adem.polyclinic.model;
+package com.v1adem.polyclinic.entity;
 
 import jakarta.persistence.*;
 
@@ -6,10 +6,10 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Entity
-public class Prescription {
+public class Visit {
     @Id
     @GeneratedValue
-    @Column(name = "prescription_id")
+    @Column(name = "visit_id")
     private Long id;
     @ManyToOne
     @JoinColumn(name = "patient_id")
@@ -18,11 +18,11 @@ public class Prescription {
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
     @Column(nullable = false)
-    private String medication;
+    private String reason;
     @Column(nullable = false)
-    private String dosage;
+    private String diagnosis;
     @Column(nullable = false)
-    private String instructions;
+    private String treatment;
     @Column(nullable = false)
     private Timestamp dateCreated;
 

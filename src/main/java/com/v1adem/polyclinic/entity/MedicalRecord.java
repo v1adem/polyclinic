@@ -1,10 +1,9 @@
-package com.v1adem.polyclinic.model;
+package com.v1adem.polyclinic.entity;
 
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.ZoneOffset;
 
 @Entity
 public class MedicalRecord {
