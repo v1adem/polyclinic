@@ -7,7 +7,6 @@ import de.vandermeer.asciitable.CWC_LongestLine;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import org.springframework.shell.standard.ShellOption;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
