@@ -1,10 +1,14 @@
 package com.v1adem.polyclinic.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
 
+@NoArgsConstructor
+@Getter
 @Entity
 public class Prescription {
     @Id
@@ -25,6 +29,18 @@ public class Prescription {
     private String instructions;
     @Column(nullable = false)
     private Timestamp dateCreated;
+
+    public Prescription(Patient patient,
+                        Doctor doctor,
+                        String medication,
+                        String dosage,
+                        String instructions) {
+        this.patient = patient;
+        this.doctor = doctor;
+        this.medication = medication;
+        this.dosage = dosage;
+        this.instructions = instructions;
+    }
 
     @PrePersist
     void dateCreated() {
