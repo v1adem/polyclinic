@@ -1,6 +1,5 @@
 package com.v1adem.polyclinic.service;
 
-import com.v1adem.polyclinic.entity.Patient;
 import com.v1adem.polyclinic.entity.Visit;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
