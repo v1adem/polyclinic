@@ -4,14 +4,14 @@ import com.v1adem.polyclinic.entity.Visit;
 import com.v1adem.polyclinic.service.DoctorService;
 import com.v1adem.polyclinic.service.PatientService;
 import com.v1adem.polyclinic.service.VisitService;
-import de.vandermeer.asciitable.AsciiTable;
-import de.vandermeer.asciitable.CWC_LongestLine;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
 import java.util.List;
 import java.util.Scanner;
+
+import static com.v1adem.polyclinic.console.TableCreator.createVisitTable;
 
 @RequiredArgsConstructor
 @ShellComponent
@@ -76,29 +76,5 @@ public class VisitCommands {
     public String getTotalNumberOfVisits() {
         long totalVisits = visitService.getTotalNumberOfVisits();
         return "Total number of visits: " + totalVisits;
-    }
-
-    private String createVisitTable(List<Visit> visits){
-        AsciiTable table = new AsciiTable();
-        table.addRule();
-        table.addRow("ID",
-                "Patient ID", "Doctor ID",
-                "Reason", "Diagnosis",
-                "Treatment", "Date Created");
-        table.addRule();
-        for (Visit visit : visits) {
-            table.addRow(visit.getId(),
-                    visit.getPatient().getId(),
-                    visit.getDoctor().getId(),
-                    visit.getReason(),
-                    visit.getDiagnosis(),
-                    visit.getTreatment(),
-                    visit.getDateCreated());
-            table.addRule();
-        }
-
-        table.getRenderer().setCWC(new CWC_LongestLine());
-
-        return table.render();
     }
 }

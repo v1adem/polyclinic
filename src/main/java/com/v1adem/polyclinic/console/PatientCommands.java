@@ -2,8 +2,6 @@ package com.v1adem.polyclinic.console;
 
 import com.v1adem.polyclinic.entity.Patient;
 import com.v1adem.polyclinic.service.PatientService;
-import de.vandermeer.asciitable.AsciiTable;
-import de.vandermeer.asciitable.CWC_LongestLine;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -12,6 +10,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
+
+import static com.v1adem.polyclinic.console.TableCreator.*;
 
 @RequiredArgsConstructor
 @ShellComponent
@@ -40,7 +40,7 @@ public class PatientCommands {
                 phoneNumber,
                 address,
                 LocalDate.parse(dateOfBirth, formatter));
-        patientService.addPatient(patient);
+        patientService.add(patient);
     }
 
     @ShellMethod(value = "Display information about a patient by ID.", key = "patient show")
@@ -65,7 +65,7 @@ public class PatientCommands {
 
     @ShellMethod(value = "Delete patient by ID.", key = "patient del")
     public String deletePatientById(Long id) {
-        if (patientService.deletePatientById(id)) {
+        if (patientService.deleteById(id)) {
             return "Patient with ID " + id + " deleted successfully";
         } else {
             return "Patient with ID " + id + " not found";
@@ -74,31 +74,70 @@ public class PatientCommands {
 
     @ShellMethod(value = "Get total number of patients.", key = "patient count")
     public String getTotalNumberOfPatients() {
-        long totalPatients = patientService.getTotalNumberOfPatients();
+        long totalPatients = patientService.getTotalNumber();
         return "Total number of patients: " + totalPatients;
     }
 
-    private String createPatientTable(List<Patient> patients){
-        AsciiTable table = new AsciiTable();
-        table.addRule();
-        table.addRow("ID",
-                "First Name", "Last Name",
-                "Email", "Phone Number",
-                "Address", "Date of Birth");
-        table.addRule();
-        for (Patient patient : patients) {
-            table.addRow(patient.getId(),
-                    patient.getFirstName(),
-                    patient.getLastName(),
-                    patient.getEmail(),
-                    patient.getPhoneNumber(),
-                    patient.getAddress(),
-                    patient.getDateOfBirth());
-            table.addRule();
+    @ShellMethod(value = "Get total number of visits for individual patient.", key = "patient visit count")
+    public String getTotalNumberOfVisitsForPatient(long id) {
+        Patient patient = patientService.findById(id);
+        if (patient == null) {
+            return "Patient with ID " + id + " not found";
         }
+        return "Total number of visits for " + patient.getLastName() + " : " + patient.getVisits().size();
+    }
 
-        table.getRenderer().setCWC(new CWC_LongestLine());
+    @ShellMethod(value = "Get all visits for individual patient.", key = "patient visit")
+    public String getAllVisitsForPatient(long id) {
+        Patient patient = patientService.findById(id);
+        if (patient == null) {
+            return "Patient with ID " + id + " not found";
+        }
+        System.out.println(
+                "Patient " + patient.getLastName() + " " + patient.getFirstName()
+                        + " has " + patient.getVisits().size() + " visits:");
+        return createVisitTable(patient.getVisits());
+    }
 
-        return table.render();
+    @ShellMethod(value = "Get total number of prescriptions for individual patient.", key = "patient presc count")
+    public String getTotalNumberOfPrescriptionsForPatient(long id) {
+        Patient patient = patientService.findById(id);
+        if (patient == null) {
+            return "Patient with ID " + id + " not found";
+        }
+        return "Total number of prescriptions for " + patient.getLastName() + " : " + patient.getPrescriptions().size();
+    }
+
+    @ShellMethod(value = "Get all visits for prescriptions patient.", key = "patient presc")
+    public String getAllPrescriptionsForPatient(long id) {
+        Patient patient = patientService.findById(id);
+        if (patient == null) {
+            return "Patient with ID " + id + " not found";
+        }
+        System.out.println(
+                "Patient " + patient.getLastName() + " " + patient.getFirstName()
+                        + " has " + patient.getVisits().size() + " prescriptions:");
+        return createPrescriptionTable(patient.getPrescriptions());
+    }
+
+    @ShellMethod(value = "Get total number of medical records for individual patient.", key = "patient medrec count")
+    public String getTotalNumberOfMedicalRecordsForPatient(long id) {
+        Patient patient = patientService.findById(id);
+        if (patient == null) {
+            return "Patient with ID " + id + " not found";
+        }
+        return "Total number of medical records for " + patient.getLastName() + " : " + patient.getMedicalRecords().size();
+    }
+
+    @ShellMethod(value = "Get all visits for individual patient.", key = "patient medrec")
+    public String getAllMedicalRecordsForPatient(long id) {
+        Patient patient = patientService.findById(id);
+        if (patient == null) {
+            return "Patient with ID " + id + " not found";
+        }
+        System.out.println(
+                "Patient " + patient.getLastName() + " " + patient.getFirstName()
+                        + " has " + patient.getVisits().size() + " medical records:");
+        return createMedicalRecordTable(patient.getMedicalRecords());
     }
 }
