@@ -1,11 +1,15 @@
 package com.v1adem.polyclinic.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
 
+@Getter
 @Entity
+@NoArgsConstructor
 public class Visit {
     @Id
     @GeneratedValue
@@ -25,6 +29,18 @@ public class Visit {
     private String treatment;
     @Column(nullable = false)
     private Timestamp dateCreated;
+
+    public Visit(Patient patient,
+                 Doctor doctor,
+                 String reason,
+                 String diagnosis,
+                 String treatment) {
+        this.patient = patient;
+        this.doctor = doctor;
+        this.reason = reason;
+        this.diagnosis = diagnosis;
+        this.treatment = treatment;
+    }
 
     @PrePersist
     void dateCreated() {
