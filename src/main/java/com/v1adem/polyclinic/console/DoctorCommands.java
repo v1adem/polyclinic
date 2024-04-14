@@ -33,8 +33,8 @@ public class DoctorCommands {
         Doctor doctor = new Doctor(firstName,
                 lastName,
                 email,
-                specialization,
-                phoneNumber);
+                phoneNumber,
+                specialization);
         doctorService.addDoctor(doctor);
     }
 
