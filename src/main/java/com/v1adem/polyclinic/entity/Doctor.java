@@ -24,14 +24,18 @@ public class Doctor {
     private String phoneNumber;
     @Column(nullable = false)
     private String specialization;
-    @OneToMany(mappedBy = "doctor")
+    @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
     private List<Visit> visits;
-    @OneToMany(mappedBy = "doctor")
+    @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
     private List<MedicalRecord> medicalRecords;
-    @OneToMany(mappedBy = "doctor")
+    @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
     private List<Prescription> prescriptions;
 
-    public Doctor(String name, String lastName, String email, String phoneNumber, String specialization) {
+    public Doctor(String name,
+                  String lastName,
+                  String email,
+                  String phoneNumber,
+                  String specialization) {
         this.firstName = name;
         this.lastName = lastName;
         this.email = email;

@@ -27,14 +27,19 @@ public class Patient {
     private String address;
     @Column(nullable = false)
     private LocalDate dateOfBirth;
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
     private List<Visit> visits;
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
     private List<MedicalRecord> medicalRecords;
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
     private List<Prescription> prescriptions;
 
-    public Patient(String firstname, String lastname, String email, String phone, String address, LocalDate dateOfBirth) {
+    public Patient(String firstname,
+                   String lastname,
+                   String email,
+                   String phone,
+                   String address,
+                   LocalDate dateOfBirth) {
         this.firstName = firstname;
         this.lastName = lastname;
         this.email = email;
