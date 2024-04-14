@@ -12,7 +12,7 @@ import java.util.Optional;
 public class PatientService {
     private final PatientRepository patientRepository;
 
-    public void addPatient(Patient patient) {
+    public void add(Patient patient) {
         patientRepository.save(patient);
     }
 
@@ -25,7 +25,7 @@ public class PatientService {
         return patientRepository.findAll().stream().toList();
     }
 
-    public boolean deletePatientById(Long id) {
+    public boolean deleteById(Long id) {
         Optional<Patient> patientOptional = patientRepository.findById(id);
         if (patientOptional.isPresent()) {
             patientRepository.deleteById(id);
@@ -34,7 +34,7 @@ public class PatientService {
         return false;
     }
 
-    public long getTotalNumberOfPatients() {
+    public long getTotalNumber() {
         return patientRepository.count();
     }
 }

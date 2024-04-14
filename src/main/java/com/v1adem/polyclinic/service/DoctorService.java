@@ -12,7 +12,7 @@ import java.util.Optional;
 public class DoctorService {
     private final DoctorRepository doctorRepository;
 
-    public void addDoctor(Doctor doctor) {
+    public void add(Doctor doctor) {
         doctorRepository.save(doctor);
     }
 
@@ -25,7 +25,7 @@ public class DoctorService {
         return doctorRepository.findAll().stream().toList();
     }
 
-    public boolean deleteDoctorById(Long id) {
+    public boolean deleteById(Long id) {
         Optional<Doctor> doctorOptional = doctorRepository.findById(id);
         if (doctorOptional.isPresent()) {
             doctorRepository.deleteById(id);
@@ -34,11 +34,11 @@ public class DoctorService {
         return false;
     }
 
-    public long getTotalNumberOfDoctors() {
+    public long getTotalNumber() {
         return doctorRepository.count();
     }
 
-    public List<Doctor> findDoctorsBySpecialization(String specialization) {
+    public List<Doctor> findBySpecialization(String specialization) {
         return doctorRepository.findAll().stream()
                 .filter(doctor -> doctor.getSpecialization().equals(specialization)).toList();
     }
