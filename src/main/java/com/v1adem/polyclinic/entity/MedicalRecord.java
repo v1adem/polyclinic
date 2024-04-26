@@ -12,13 +12,13 @@ import java.time.LocalDate;
 @Entity
 public class MedicalRecord {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "medicalRecord_id")
     private Long id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "doctor_id", nullable = false)
     private Doctor doctor;
     @Column(nullable = false)
