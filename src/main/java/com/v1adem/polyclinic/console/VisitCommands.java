@@ -77,4 +77,15 @@ public class VisitCommands {
         long totalVisits = visitService.getTotalNumberOfVisits();
         return "Total number of visits: " + totalVisits;
     }
+
+    @ShellMethod(value = "Update diagnosis", key = "visit update di")
+    public String updateDiagnosis(Long id) {
+        Visit visit = visitService.findById(id);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("New diagnosis: ");
+        String newDiagnosis = sc.nextLine();
+        visit.setDiagnosis(newDiagnosis);
+        visitService.update(visit);
+        return createVisitTable(List.of(visitService.findById(id)));
+    }
 }
