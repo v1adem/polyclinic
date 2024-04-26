@@ -38,4 +38,8 @@ public class VisitService {
     public long getTotalNumberOfVisits() {
         return visitRepository.count();
     }
+
+    public void update(Visit visit) {
+        visitRepository.save(visit);
+    }
 }
