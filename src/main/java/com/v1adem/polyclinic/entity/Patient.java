@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 public class Patient {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "patient_id")
     private Long id;
     @Column(nullable = false)
@@ -27,12 +27,22 @@ public class Patient {
     private String address;
     @Column(nullable = false)
     private LocalDate dateOfBirth;
-    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "patient",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<Visit> visits;
-    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "patient",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<MedicalRecord> medicalRecords;
-    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "patient",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<Prescription> prescriptions;
+
 
     public Patient(String firstname,
                    String lastname,

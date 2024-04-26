@@ -3,6 +3,7 @@ package com.v1adem.polyclinic.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -12,17 +13,18 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Visit {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "visit_id")
     private Long id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "patient_id")
     private Patient patient;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
     @Column(nullable = false)
     private String reason;
+    @Setter
     @Column(nullable = false)
     private String diagnosis;
     @Column(nullable = false)

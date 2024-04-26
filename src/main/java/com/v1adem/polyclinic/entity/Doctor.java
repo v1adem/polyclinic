@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 public class Doctor {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "doctor_id")
     private Long id;
     @Column(nullable = false)
@@ -24,11 +24,20 @@ public class Doctor {
     private String phoneNumber;
     @Column(nullable = false)
     private String specialization;
-    @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "doctor",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<Visit> visits;
-    @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "doctor",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<MedicalRecord> medicalRecords;
-    @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "doctor",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<Prescription> prescriptions;
 
     public Doctor(String name,
