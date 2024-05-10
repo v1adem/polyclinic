@@ -16,16 +16,16 @@ public class DoctorService {
         doctorRepository.save(doctor);
     }
 
-    public Doctor findById(long id) {
+    public Doctor findById(String id) {
         Optional<Doctor> doctorOptional = doctorRepository.findById(id);
         return doctorOptional.orElse(null);
     }
 
     public List<Doctor> findAll() {
-        return doctorRepository.findAll().stream().toList();
+        return doctorRepository.findAll();
     }
 
-    public boolean deleteById(Long id) {
+    public boolean deleteById(String id) {
         Optional<Doctor> doctorOptional = doctorRepository.findById(id);
         if (doctorOptional.isPresent()) {
             doctorRepository.deleteById(id);

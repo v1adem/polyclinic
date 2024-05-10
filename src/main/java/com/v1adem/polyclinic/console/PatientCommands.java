@@ -2,6 +2,7 @@ package com.v1adem.polyclinic.console;
 
 import com.v1adem.polyclinic.entity.Patient;
 import com.v1adem.polyclinic.service.PatientService;
+import com.v1adem.polyclinic.service.VisitService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -17,6 +18,7 @@ import static com.v1adem.polyclinic.console.TableCreator.*;
 @ShellComponent
 public class PatientCommands {
     private final PatientService patientService;
+    private final VisitService visitService;
 
     @ShellMethod(value = "Add a new patient", key = "patient add")
     public void addPatient() {
@@ -44,13 +46,13 @@ public class PatientCommands {
     }
 
     @ShellMethod(value = "Display information about a patient by ID.", key = "patient show")
-    public String showPatientById(Long id) {
+    public String showPatientById(String id) {
         Patient patient = patientService.findById(id);
         if (patient == null) {
             return "Patient with ID " + id + " not found";
         }
-
-        return createPatientTable(List.of(patient));
+        System.out.println(createPatientTable(List.of(patient)));
+        return createVisitTable(visitService.findAllByPatientId(id));
     }
 
     @ShellMethod(value = "Display all patients.", key = "patient show all")
@@ -64,7 +66,7 @@ public class PatientCommands {
     }
 
     @ShellMethod(value = "Delete patient by ID.", key = "patient del")
-    public String deletePatientById(Long id) {
+    public String deletePatientById(String id) {
         if (patientService.deleteById(id)) {
             return "Patient with ID " + id + " deleted successfully";
         } else {
@@ -79,7 +81,7 @@ public class PatientCommands {
     }
 
     @ShellMethod(value = "Get total number of visits for individual patient.", key = "patient visit count")
-    public String getTotalNumberOfVisitsForPatient(long id) {
+    public String getTotalNumberOfVisitsForPatient(String id) {
         Patient patient = patientService.findById(id);
         if (patient == null) {
             return "Patient with ID " + id + " not found";
@@ -88,7 +90,7 @@ public class PatientCommands {
     }
 
     @ShellMethod(value = "Get all visits for individual patient.", key = "patient visit")
-    public String getAllVisitsForPatient(long id) {
+    public String getAllVisitsForPatient(String id) {
         Patient patient = patientService.findById(id);
         if (patient == null) {
             return "Patient with ID " + id + " not found";
@@ -100,7 +102,7 @@ public class PatientCommands {
     }
 
     @ShellMethod(value = "Get total number of prescriptions for individual patient.", key = "patient presc count")
-    public String getTotalNumberOfPrescriptionsForPatient(long id) {
+    public String getTotalNumberOfPrescriptionsForPatient(String id) {
         Patient patient = patientService.findById(id);
         if (patient == null) {
             return "Patient with ID " + id + " not found";
@@ -109,7 +111,7 @@ public class PatientCommands {
     }
 
     @ShellMethod(value = "Get all visits for prescriptions patient.", key = "patient presc")
-    public String getAllPrescriptionsForPatient(long id) {
+    public String getAllPrescriptionsForPatient(String id) {
         Patient patient = patientService.findById(id);
         if (patient == null) {
             return "Patient with ID " + id + " not found";
@@ -121,7 +123,7 @@ public class PatientCommands {
     }
 
     @ShellMethod(value = "Get total number of medical records for individual patient.", key = "patient medrec count")
-    public String getTotalNumberOfMedicalRecordsForPatient(long id) {
+    public String getTotalNumberOfMedicalRecordsForPatient(String id) {
         Patient patient = patientService.findById(id);
         if (patient == null) {
             return "Patient with ID " + id + " not found";
@@ -130,7 +132,7 @@ public class PatientCommands {
     }
 
     @ShellMethod(value = "Get all visits for individual patient.", key = "patient medrec")
-    public String getAllMedicalRecordsForPatient(long id) {
+    public String getAllMedicalRecordsForPatient(String id) {
         Patient patient = patientService.findById(id);
         if (patient == null) {
             return "Patient with ID " + id + " not found";

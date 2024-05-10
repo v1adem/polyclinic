@@ -24,9 +24,9 @@ public class MedicalRecordCommands {
     public void addMedicalRecord() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Patient ID: ");
-        long patientId = sc.nextLong();
+        String patientId = sc.nextLine();
         System.out.println("Doctor ID: ");
-        long doctorId = sc.nextLong();
+        String doctorId = sc.nextLine();
         sc.nextLine();
         System.out.println("Diagnosis: ");
         String diagnosis = sc.nextLine();
@@ -42,7 +42,7 @@ public class MedicalRecordCommands {
     }
 
     @ShellMethod(value = "Display information about a medical record by ID.", key = "presc show")
-    public String showMedicalRecordById(Long id) {
+    public String showMedicalRecordById(String id) {
         MedicalRecord medicalRecords = medicalRecordService.findById(id);
         if (medicalRecords == null) {
             return "MedicalRecord with ID " + id + " not found";
@@ -62,7 +62,7 @@ public class MedicalRecordCommands {
     }
 
     @ShellMethod(value = "Delete medical record by ID.", key = "presc del")
-    public String deleteMedicalRecordById(Long id) {
+    public String deleteMedicalRecordById(String id) {
         if (medicalRecordService.deleteById(id)) {
             return "Medical record with ID " + id + " deleted successfully";
         } else {

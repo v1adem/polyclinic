@@ -20,12 +20,12 @@ public class MedicalRecordService {
         return medicalRecordRepository.findAll();
     }
 
-    public MedicalRecord findById(long id) {
+    public MedicalRecord findById(String id) {
         Optional<MedicalRecord> medicalRecordOptional = medicalRecordRepository.findById(id);
         return medicalRecordOptional.orElse(null);
     }
 
-    public boolean deleteById(long id) {
+    public boolean deleteById(String id) {
         Optional<MedicalRecord> medicalRecordOptional = medicalRecordRepository.findById(id);
         if (medicalRecordOptional.isPresent()) {
             medicalRecordRepository.deleteById(id);

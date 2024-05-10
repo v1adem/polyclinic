@@ -24,9 +24,9 @@ public class VisitCommands {
     public void addVisit() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Patient ID: ");
-        long patientId = sc.nextLong();
+        String patientId = sc.nextLine();
         System.out.println("Doctor ID: ");
-        long doctorId = sc.nextLong();
+        String doctorId = sc.nextLine();
         sc.nextLine();
         System.out.println("Reason: ");
         String reason = sc.nextLine();
@@ -44,7 +44,7 @@ public class VisitCommands {
     }
 
     @ShellMethod(value = "Display information about a visit by ID.", key = "visit show")
-    public String showVisitById(Long id) {
+    public String showVisitById(String id) {
         Visit visit = visitService.findById(id);
         if (visit == null) {
             return "Visit with ID " + id + " not found";
@@ -64,7 +64,7 @@ public class VisitCommands {
     }
 
     @ShellMethod(value = "Delete visit by ID.", key = "visit del")
-    public String deleteVisitById(Long id) {
+    public String deleteVisitById(String id) {
         if (visitService.deleteVisitById(id)) {
             return "Visit with ID " + id + " deleted successfully";
         } else {
@@ -79,7 +79,7 @@ public class VisitCommands {
     }
 
     @ShellMethod(value = "Update diagnosis", key = "visit update di")
-    public String updateDiagnosis(Long id) {
+    public String updateDiagnosis(String id) {
         Visit visit = visitService.findById(id);
         Scanner sc = new Scanner(System.in);
         System.out.println("New diagnosis: ");

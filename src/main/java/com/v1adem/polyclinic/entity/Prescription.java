@@ -1,49 +1,46 @@
 package com.v1adem.polyclinic.entity;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
+import org.springframework.data.mongodb.core.mapping.Field;
+import java.util.Date;
 
 @NoArgsConstructor
 @Getter
-@Entity
+@Document(collection = "prescription")
 public class Prescription {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "prescription_id")
-    private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "doctor_id")
-    private Doctor doctor;
-    @Column(nullable = false)
-    private String medication;
-    @Column(nullable = false)
-    private String dosage;
-    @Column(nullable = false)
-    private String instructions;
-    @Column(nullable = false)
-    private Timestamp dateCreated;
+    private String id;
 
-    public Prescription(Patient patient,
-                        Doctor doctor,
-                        String medication,
-                        String dosage,
-                        String instructions) {
+    @DocumentReference(collection = "patient")
+    private Patient patient;
+
+    @DocumentReference(collection = "doctor")
+    private Doctor doctor;
+
+    @Field("medication")
+    private String medication;
+
+    @Field("dosage")
+    private String dosage;
+
+    @Field("instructions")
+    private String instructions;
+
+    @Field("date_created")
+    private Date dateCreated;
+
+    public Prescription(Patient patient, Doctor doctor, String medication, String dosage, String instructions) {
         this.patient = patient;
         this.doctor = doctor;
         this.medication = medication;
         this.dosage = dosage;
         this.instructions = instructions;
-    }
-
-    @PrePersist
-    void dateCreated() {
-        this.dateCreated = new Timestamp(LocalDate.now().toEpochDay());
+        this.dateCreated = new Date();  // Initialize with current date
     }
 }
+

@@ -16,7 +16,7 @@ public class PatientService {
         patientRepository.save(patient);
     }
 
-    public Patient findById(long id) {
+    public Patient findById(String id) {
         Optional<Patient> patientOptional = patientRepository.findById(id);
         return patientOptional.orElse(null);
     }
@@ -25,7 +25,7 @@ public class PatientService {
         return patientRepository.findAll().stream().toList();
     }
 
-    public boolean deleteById(Long id) {
+    public boolean deleteById(String id) {
         Optional<Patient> patientOptional = patientRepository.findById(id);
         if (patientOptional.isPresent()) {
             patientRepository.deleteById(id);

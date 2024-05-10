@@ -21,12 +21,12 @@ public class PrescriptionService {
         return prescriptionRepository.findAll();
     }
 
-    public Prescription findById(long id) {
+    public Prescription findById(String id) {
         Optional<Prescription> prescriptionOptional = prescriptionRepository.findById(id);
         return prescriptionOptional.orElse(null);
     }
 
-    public boolean deleteById(long id) {
+    public boolean deleteById(String id) {
         Optional<Prescription> prescriptionOptional = prescriptionRepository.findById(id);
         if (prescriptionOptional.isPresent()) {
             prescriptionRepository.deleteById(id);

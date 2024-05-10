@@ -1,59 +1,56 @@
 package com.v1adem.polyclinic.entity;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.ReadOnlyProperty;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
+import org.springframework.data.mongodb.core.mapping.Field;
 @NoArgsConstructor
 @Getter
-@Entity
+@Document(collection = "patient")
 public class Patient {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "patient_id")
-    private Long id;
-    @Column(nullable = false)
+    private String id;
+
+    @Field("first_name")
     private String firstName;
-    @Column(nullable = false)
+
+    @Field("last_name")
     private String lastName;
-    @Column(unique = true, nullable = false)
+
+    @Field("email")
     private String email;
-    @Column(unique = true, nullable = false)
+
+    @Field("phone_number")
     private String phoneNumber;
-    @Column(nullable = false)
+
+    @Field("address")
     private String address;
-    @Column(nullable = false)
+
+    @Field("date_of_birth")
     private LocalDate dateOfBirth;
-    @OneToMany(mappedBy = "patient",
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
+
+    @ReadOnlyProperty
+    @DocumentReference(collection = "visit", lazy = true)
     private List<Visit> visits;
-    @OneToMany(mappedBy = "patient",
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
+    @ReadOnlyProperty
+    @DocumentReference(collection = "medical_record", lazy = true)
     private List<MedicalRecord> medicalRecords;
-    @OneToMany(mappedBy = "patient",
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
+    @ReadOnlyProperty
+    @DocumentReference(collection = "prescription", lazy = true)
     private List<Prescription> prescriptions;
 
-
-    public Patient(String firstname,
-                   String lastname,
-                   String email,
-                   String phone,
-                   String address,
-                   LocalDate dateOfBirth) {
-        this.firstName = firstname;
-        this.lastName = lastname;
+    public Patient(String firstName, String lastName, String email, String phoneNumber, String address, LocalDate dateOfBirth) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
-        this.phoneNumber = phone;
+        this.phoneNumber = phoneNumber;
         this.address = address;
         this.dateOfBirth = dateOfBirth;
     }

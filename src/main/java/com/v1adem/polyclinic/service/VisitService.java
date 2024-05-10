@@ -2,10 +2,13 @@ package com.v1adem.polyclinic.service;
 
 import com.v1adem.polyclinic.entity.Visit;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -17,7 +20,7 @@ public class VisitService {
         visitRepository.save(visit);
     }
 
-    public Visit findById(long id) {
+    public Visit findById(String id) {
         Optional<Visit> patientOptional = visitRepository.findById(id);
         return patientOptional.orElse(null);
     }
@@ -26,7 +29,7 @@ public class VisitService {
         return visitRepository.findAll().stream().toList();
     }
 
-    public boolean deleteVisitById(Long id) {
+    public boolean deleteVisitById(String id) {
         Optional<Visit> patientOptional = visitRepository.findById(id);
         if (patientOptional.isPresent()) {
             visitRepository.deleteById(id);
@@ -41,5 +44,9 @@ public class VisitService {
 
     public void update(Visit visit) {
         visitRepository.save(visit);
+    }
+
+    public List<Visit> findAllByPatientId(String id) {
+        return visitRepository.findAllByPatientId(id);
     }
 }

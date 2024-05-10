@@ -39,12 +39,11 @@ public class DoctorCommands {
     }
 
     @ShellMethod(value = "Display information about a doctor by ID.", key = "doctor show")
-    public String showDoctorById(Long id) {
+    public String showDoctorById(String id) {
         Doctor doctor = doctorService.findById(id);
         if (doctor == null) {
             return "Doctor with ID " + id + " not found";
         }
-
         return createDoctorTable(List.of(doctor));
     }
 
@@ -59,7 +58,7 @@ public class DoctorCommands {
     }
 
     @ShellMethod(value = "Delete doctor by ID.", key = "doctor del")
-    public String deleteDoctorById(Long id) {
+    public String deleteDoctorById(String id) {
         if (doctorService.deleteById(id)) {
             return "Doctor with ID " + id + " deleted successfully";
         } else {
@@ -82,6 +81,4 @@ public class DoctorCommands {
 
         return createDoctorTable(doctors);
     }
-
-
 }

@@ -1,51 +1,48 @@
 package com.v1adem.polyclinic.entity;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
+import org.springframework.data.mongodb.core.mapping.Field;
+import java.util.Date;
 
-@Getter
-@Entity
 @NoArgsConstructor
+@Getter
+@Document(collection = "visit")
 public class Visit {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "visit_id")
-    private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "doctor_id")
-    private Doctor doctor;
-    @Column(nullable = false)
-    private String reason;
-    @Setter
-    @Column(nullable = false)
-    private String diagnosis;
-    @Column(nullable = false)
-    private String treatment;
-    @Column(nullable = false)
-    private Timestamp dateCreated;
+    private String id;
 
-    public Visit(Patient patient,
-                 Doctor doctor,
-                 String reason,
-                 String diagnosis,
-                 String treatment) {
+    @DocumentReference(collection = "patient", lazy = true)
+    private Patient patient;
+
+    @DocumentReference(collection = "doctor", lazy = true)
+    private Doctor doctor;
+
+    @Field("reason")
+    private String reason;
+
+    @Setter
+    @Field("diagnosis")
+    private String diagnosis;
+
+    @Field("treatment")
+    private String treatment;
+
+    @Field("date_created")
+    private Date dateCreated;
+
+    public Visit(Patient patient, Doctor doctor, String reason, String diagnosis, String treatment) {
         this.patient = patient;
         this.doctor = doctor;
         this.reason = reason;
         this.diagnosis = diagnosis;
         this.treatment = treatment;
-    }
-
-    @PrePersist
-    void dateCreated() {
-        this.dateCreated = new Timestamp(LocalDate.now().toEpochDay());
+        this.dateCreated = new Date();  // Initialize with current date
     }
 }
+

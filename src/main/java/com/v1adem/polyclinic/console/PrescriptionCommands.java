@@ -24,9 +24,9 @@ public class PrescriptionCommands {
     public void addPrescription() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Patient ID: ");
-        long patientId = sc.nextLong();
+        String patientId = sc.nextLine();
         System.out.println("Doctor ID: ");
-        long doctorId = sc.nextLong();
+        String doctorId = sc.nextLine();
         sc.nextLine();
         System.out.println("Medication: ");
         String medication = sc.nextLine();
@@ -44,7 +44,7 @@ public class PrescriptionCommands {
     }
 
     @ShellMethod(value = "Display information about a prescription by ID.", key = "presc show")
-    public String showPrescriptionById(Long id) {
+    public String showPrescriptionById(String id) {
         Prescription prescriptions = prescriptionService.findById(id);
         if (prescriptions == null) {
             return "Prescription with ID " + id + " not found";
@@ -64,7 +64,7 @@ public class PrescriptionCommands {
     }
 
     @ShellMethod(value = "Delete prescription by ID.", key = "presc del")
-    public String deletePrescriptionById(Long id) {
+    public String deletePrescriptionById(String id) {
         if (prescriptionService.deleteById(id)) {
             return "Prescription with ID " + id + " deleted successfully";
         } else {
